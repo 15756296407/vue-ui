@@ -1,12 +1,6 @@
 <template>
   <div id="menus">
-    <el-tree
-      :data="data6"
-      node-key="id"
-      highlight-current
-      :render-content="rendered"
-      @node-expand="bindDrag"
-    ></el-tree>
+    <el-tree :data="data6" node-key="id" highlight-current :render-content="rendered" @node-expand="syncBindDrag"></el-tree>
   </div>
 </template>
 <script>
@@ -14,6 +8,7 @@ import $ from "jquery";
 import "@/assets/libs/jquery-ui/jquery-ui.min";
 import "@/assets/libs/jquery-ui/jquery-ui.structure.min.css";
 import "@/assets/libs/jquery-ui/jquery-ui.theme.min.css";
+import { setTimeout } from 'timers';
 let data = [{
   id: 1,
   label: '一级 1',
@@ -79,14 +74,16 @@ export default {
       let className = 'menu-label';
       data.children && (className += '-parent');
       return (
-        <div class={className}>{data.label}</div>
+        <div class={className} dataId={data.id}>{data.label}</div>
       )
     },
+    syncBindDrag () {
+      setTimeout(this.bindDrag);
+    },
     bindDrag () {
+      let _this = this;
       $(".menu-label").draggable({
-        connectToSortable: "#canvas",
         helper: "clone",
-        revert: "invalid",
         placeholder: "ui-state-highlight",
         start (event, ui) {
           let Ele = ui.helper[0];
@@ -107,8 +104,7 @@ export default {
         },
         stop (event, ui) {
           let parentEle = ui.helper[0].parentElement;
-
-
+          _this.$store.commit('addNodes', {});
           $(ui.helper[0]).remove();
           return true;
         }
@@ -126,12 +122,12 @@ export default {
 
 <style lang="less" scoped>
 #menus {
-  width: 245px;
-  background: gray;
-  position: relative;
+    width: 245px;
+    background: gray;
+    position: relative;
 }
 .el-menu-vertical-demo:not(.el-menu--collapse) {
-  width: 100%;
-  min-height: 400px;
+    width: 100%;
+    min-height: 400px;
 }
 </style>
