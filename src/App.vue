@@ -7,7 +7,7 @@
 </template>
 <script>
 import '@/assets/styles/app.css'
-import Canvass from '@/components/canvas/index.vue'
+import Canvass from '@/components/canvas/canvas.vue'
 import Panels from '@/components/panels/index.vue'
 import Menus from '@/components/tabs-menu/index.vue'
 export default {

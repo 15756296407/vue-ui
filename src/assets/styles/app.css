@@ -19,3 +19,18 @@ body,
     align-items: center;
     cursor: all-scroll;
 }
+.canvas-drag {
+    width: 182px;
+    height: 30px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    color: #03a9f4;
+    padding: 0 10px;
+    border: 1px #03a9f4 dashed !important;
+    background-color: #fff !important;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    cursor: all-scroll;
+    position: absolute;
+}

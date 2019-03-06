@@ -1,6 +1,12 @@
 <template>
   <div id="menus">
-    <el-tree :data="data6" node-key="id" highlight-current :render-content="rendered" @node-expand="syncBindDrag"></el-tree>
+    <el-tree
+      :data="data6"
+      node-key="id"
+      highlight-current
+      :render-content="rendered"
+      @node-expand="syncBindDrag"
+    ></el-tree>
   </div>
 </template>
 <script>
@@ -74,7 +80,7 @@ export default {
       let className = 'menu-label';
       data.children && (className += '-parent');
       return (
-        <div class={className} dataId={data.id}>{data.label}</div>
+        <div class={className} dataId={data.label}>{data.label}</div>
       )
     },
     syncBindDrag () {
@@ -103,8 +109,6 @@ export default {
           });
         },
         stop (event, ui) {
-          let parentEle = ui.helper[0].parentElement;
-          _this.$store.commit('addNodes', {});
           $(ui.helper[0]).remove();
           return true;
         }
@@ -122,12 +126,14 @@ export default {
 
 <style lang="less" scoped>
 #menus {
-    width: 245px;
-    background: gray;
-    position: relative;
+  width: 245px;
+  background: gray;
+  position: relative;
+  box-sizing: border-box;
+  border-right: 1px solid gray;
 }
 .el-menu-vertical-demo:not(.el-menu--collapse) {
-    width: 100%;
-    min-height: 400px;
+  width: 100%;
+  min-height: 400px;
 }
 </style>
