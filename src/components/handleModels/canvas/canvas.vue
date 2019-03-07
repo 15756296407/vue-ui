@@ -16,6 +16,11 @@
 import $ from 'jquery';
 import { mapState } from 'vuex';
 export default {
+  data () {
+    return {
+      isAdd: true
+    }
+  },
   mounted () {
     let _this = this;
     $('#canvas').droppable({
@@ -25,6 +30,7 @@ export default {
           x = boundry.x - $('#menus').width(),
           y = boundry.y;
         let _time = +new Date();
+        _this.isAdd = true;//是否是添加组件的标记
         _this.$store.commit('handleModels/addNodes', {
           name: dataId,
           id: dataId + '__' + _time,
@@ -78,7 +84,7 @@ export default {
           overlays = [
             ["Arrow", { location: 0.7 }, arrowCommon]
           ];
-        _this.dropPoint(_this.$store.state.nodes);
+        _this.dropPoint($('.canvas-drag'));
         /* var conn = instance.connect({ uuids: ["li3-bottom", "li6-top"], detachable: true, reattach: true });
         instance.connect({ uuids: ["li1-bottom", "li2-top"], });
         instance.connect({ uuids: ["li1-bottom", "li3-top"] });
@@ -91,8 +97,8 @@ export default {
   },
   updated: function () {
     this.$nextTick(function () {
-      let _node = document.querySelector('#' + this.lastNode.timer);
-      this.dropPoint([_node]);
+      let _node = $('#' + this.lastNode.timer);
+      this.isAdd && this.dropPoint(_node);
     })
   },
   methods: {
@@ -101,12 +107,17 @@ export default {
       let _node = nodes.find(e => e.timer === id);
       return _node && _node.outputCfg.indexOf(output) === -1;
     },
-    dropPoint (nodes = []) {
+    dropPoint (nodes) {
+      this.isAdd = false;
       let instance = this.jsPlumbInstance,
         _this = this;
+      let _nodes = this.nodes;
       if (instance) {
-        nodes.forEach(item => {
-          let _id = item.getAttribute("id");
+        nodes.each((ind, item) => {
+          let _id = item.getAttribute("id"),
+            _node = _nodes.find(e => e.timer === _id);
+
+          //添加端点
           instance.addEndpoint(item, {
             uuid: _id + "-top",
             anchor: "Top",
@@ -123,23 +134,7 @@ export default {
             containment: '.drag-container',
             force: true,
             start: function (event) {
-              /* const moveBy = event.drag.moveBy
-              const pos = $(event.el).position()
-              _this.posLeft = pos.left
-              _this.posTop = pos.top
-              if (!moveBy.flag) {
-                event.drag.moveBy = (dx, dy, e) => {
-                  let z = event.drag.params.ignoreZoom ? 1 : jsPlumb.getZoom();
-                  if (dx < -_this.posLeft / z) {
-                    dx = -_this.posLeft / z
-                  }
-                  if (dy < -_this.posTop / z) {
-                    dy = -_this.posTop / z
-                  }
-                  moveBy.call(event.drag, dx, dy, e)
-                }
-                event.drag.moveBy.flag = true
-              } */
+
             },
             stop: function (event) {
               const pos = event.pos
@@ -158,6 +153,11 @@ export default {
               });
             }
           });
+        });
+        _nodes.forEach(e => {
+          e.outputCfg.forEach(item => {
+            instance.connect({ uuids: [e.timer + "-bottom", item + "-top"], });
+          })
         })
       }
     }
