@@ -1,17 +1,26 @@
 <template>
   <div id="app">
-    <Menus/>
-    <Canvass/>
-    <Panels/>
+    <LeftMenu/>
+    <div class="app-container">
+      <HandleModels v-if="model==='model-train'"/>
+    </div>
   </div>
 </template>
 <script>
 import '@/assets/styles/app.css'
-import Canvass from '@/components/canvas/canvas.vue'
-import Panels from '@/components/panels/index.vue'
-import Menus from '@/components/tabs-menu/index.vue'
+import LeftMenu from '@/components/leftMenu/leftMenu.vue'
+import HandleModels from '@/components/handleModels/handleModels.vue'
+import { mapState } from 'vuex';
 export default {
-  components: { Canvass, Panels, Menus }
+  components: { HandleModels, LeftMenu },
+  mounted () {
+    console.log(this)
+  },
+  computed: {
+    ...mapState('leftMenu', {
+      model: state => state.actionType
+    })
+  }
 }
 </script>
 
@@ -23,5 +32,9 @@ export default {
   text-align: center;
   color: #2c3e50;
   display: flex;
+
+  .app-container {
+    flex: 1;
+  }
 }
 </style>

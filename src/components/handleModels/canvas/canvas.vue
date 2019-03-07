@@ -25,7 +25,7 @@ export default {
           x = boundry.x - $('#menus').width(),
           y = boundry.y;
         let _time = +new Date();
-        _this.$store.commit('addNodes', {
+        _this.$store.commit('handleModels/addNodes', {
           name: dataId,
           id: dataId + '__' + _time,
           timer: '_' + _time,
@@ -58,12 +58,12 @@ export default {
       instance.bind('beforeDrop', function (info) {
         let { sourceId, targetId } = info;
         if (_this.checkLine(sourceId, targetId)) {
-          _this.$store.commit('updateNode', {
+          _this.$store.commit('handleModels/updateNode', {
             id: sourceId,
             type: 'outputCfg',
             value: targetId
           });
-          _this.$store.commit('updateNode', {
+          _this.$store.commit('handleModels/updateNode', {
             id: targetId,
             type: 'inputCfg',
             value: sourceId
@@ -97,11 +97,11 @@ export default {
   },
   methods: {
     checkLine (id, output) {
-      let nodes = this.$store.state.nodes;
+      let nodes = this.$store.state.handleModels.nodes;
       let _node = nodes.find(e => e.timer === id);
       return _node && _node.outputCfg.indexOf(output) === -1;
     },
-    dropPoint (nodes) {
+    dropPoint (nodes = []) {
       let instance = this.jsPlumbInstance,
         _this = this;
       if (instance) {
@@ -120,10 +120,10 @@ export default {
             maxConnections: 10
           });
           instance.draggable(item, {
-            containment: '',
+            containment: '.drag-container',
             force: true,
             start: function (event) {
-              const moveBy = event.drag.moveBy
+              /* const moveBy = event.drag.moveBy
               const pos = $(event.el).position()
               _this.posLeft = pos.left
               _this.posTop = pos.top
@@ -139,7 +139,7 @@ export default {
                   moveBy.call(event.drag, dx, dy, e)
                 }
                 event.drag.moveBy.flag = true
-              }
+              } */
             },
             stop: function (event) {
               const pos = event.pos
@@ -148,7 +148,7 @@ export default {
 
               _this.posLeft = null
               _this.posTop = null
-              _this.$store.commit('updateNode', {
+              _this.$store.commit('handleModels/updateNode', {
                 id: _id,
                 type: 'info',
                 value: {
@@ -156,10 +156,6 @@ export default {
                   top
                 }
               });
-              /* if (item.extra.position[0] !== left || item.extra.position[1] !== top) {
-                // _this.setDatasetChanged(_this.datasetId, true)
-                item.extra.position = [left, top]
-              } */
             }
           });
         })
@@ -167,7 +163,7 @@ export default {
     }
   },
   computed: {
-    ...mapState({
+    ...mapState('handleModels', {
       nodes: state => state.nodes,
       lastNode: state => state.nodes.slice(-1)[0],
     })
