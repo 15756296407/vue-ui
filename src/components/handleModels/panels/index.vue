@@ -10,6 +10,6 @@ export default {
 <style lang="less" scoped>
 #panels {
   width: 245px;
-  background: green;
+  border-left: 1px solid gray;
 }
 </style>
