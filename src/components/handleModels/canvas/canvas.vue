@@ -122,7 +122,19 @@ export default {
             uuid: _id + "-top",
             anchor: "Top",
             isTarget: true,
-            maxConnections: 10
+            maxConnections: 10,
+            beforeDetach: function (conn) {   //绑定一个函数，在连线前弹出确认框  
+              //   console.log('conn', conn);
+              let { sourceId, targetId } = conn;
+              _this.$store.commit('handleModels/updateNode', {
+                id: sourceId,
+                type: 'deleteConn',
+                value: {
+                  sourceId,
+                  targetId
+                }
+              });
+            },
           });
           instance.addEndpoint(item, {
             uuid: _id + "-bottom",

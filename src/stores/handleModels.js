@@ -28,11 +28,34 @@ export default {
             if (_node) {
                 switch (type) {
                     case "outputCfg": {
+                        //添加输出端
                         _node.outputCfg.push(action.value);
                         break;
                     }
                     case "inputCfg": {
+                        //添加输入端
                         _node.inputCfg.push(action.value);
+                        break;
+                    }
+                    case "deleteConn": {
+                        //删除连线
+                        let { sourceId, targetId } = action.value;
+                        let sourceNode = state.nodes.find(
+                                e => e.timer === sourceId
+                            ),
+                            sourceInd,
+                            targetNode = state.nodes.find(
+                                e => e.timer === targetId
+                            ),
+                            targetInd;
+                        sourceInd = sourceNode.outputCfg.findIndex(
+                            e => e === targetId
+                        );
+                        sourceNode.outputCfg.splice(sourceInd, 1);
+                        targetInd = targetNode.inputCfg.findIndex(
+                            e => e === sourceId
+                        );
+                        targetNode.inputCfg.splice(targetInd, 1);
                         break;
                     }
                     case "info": {
