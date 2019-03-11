@@ -34,3 +34,7 @@ body,
     cursor: all-scroll;
     position: absolute;
 }
+.el-input__inner {
+    height: 32px;
+    line-height: 32px;
+}
