@@ -4,7 +4,13 @@
       <div class="grid-name">{{data.name}}</div>
     </el-col>
     <el-col :span="18">
-      <el-input v-model="data.value" :value="data.value" placeholder="请输入内容" @change="onChange"></el-input>
+      <el-input
+        type="file"
+        v-model="data.value"
+        :value="data.value"
+        placeholder="请输入内容"
+        @change="onChange"
+      ></el-input>
     </el-col>
   </el-row>
 </template>
