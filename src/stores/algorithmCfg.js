@@ -45,9 +45,17 @@ export default {
          * @param {*} action  {type: input/output/parmas,ind:下标}
          */
         removeCfg(state, action) {
-            state.defaultCfg[action.type].splice(action.ind, 1);
+            state.defaultCfg[action.type].length > 1 &&
+                state.defaultCfg[action.type].splice(action.ind, 1);
             state.defaultCfg[action.type] = [...state.defaultCfg[action.type]];
         },
-        updateCfg() {}
+        updateCfg(state, action) {
+            let { type, ind, model, value } = action;
+            let _cfg = state.defaultCfg[type][ind];
+            if (model === "") {
+            } else {
+                _cfg[model] = value;
+            }
+        }
     }
 };

@@ -4,7 +4,7 @@
       <div class="grid-name">{{data.name}}</div>
     </el-col>
     <el-col :span="18">
-      <el-input v-model="data.value" :value="data.value" placeholder="请输入内容" @change="onChange"></el-input>
+      <el-input v-model="value" :value="value" placeholder="请输入内容" @change="onChange"></el-input>
     </el-col>
   </el-row>
 </template>
@@ -16,6 +16,9 @@ export default {
     },
     ok: {
       type: Function
+    },
+    value: {
+      type: String
     }
   },
   methods: {

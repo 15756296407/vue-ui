@@ -4,13 +4,12 @@
       <div class="grid-name">{{data.name}}</div>
     </el-col>
     <el-col :span="18">
-      <el-select v-model="value" placeholder="请选择">
+      <el-select v-model="value" placeholder="请选择" @change="onChange">
         <el-option
           v-for="item in options"
           :key="item.value"
           :label="item.label"
           :value="item.value"
-          @change="onChange"
         ></el-option>
       </el-select>
     </el-col>
@@ -24,6 +23,9 @@ export default {
     },
     ok: {
       type: Function
+    },
+    value: {
+      type: String
     }
   },
   data () {
@@ -43,8 +45,7 @@ export default {
       }, {
         value: '选项5',
         label: '北京烤鸭'
-      }],
-      value: ''
+      }]
     }
   },
   methods: {
