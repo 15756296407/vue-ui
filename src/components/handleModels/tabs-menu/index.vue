@@ -120,6 +120,7 @@ export default {
   },
   mounted () {
     this.bindDrag();
+
   }
 }
 </script>

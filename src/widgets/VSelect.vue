@@ -16,6 +16,7 @@
   </el-row>
 </template>
 <script>
+import axios from 'axios';
 export default {
   props: {
     data: {
@@ -52,6 +53,20 @@ export default {
     onChange (value) {
       this.ok(value)
     }
+  },
+  mounted () {
+    this.data.src && axios({
+      method: "get",
+      url: this.data.src + '_' + +new Date(),
+      responseType: "json",
+      headers: {
+        "content-type":
+          "application/x-www-form-urlencoded; charset=UTF-8",
+        Accept: "application/json"
+      }
+    }).then(e => {
+      console.log(e)
+    })
   }
 }
 </script>

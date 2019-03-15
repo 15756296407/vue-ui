@@ -33,7 +33,8 @@ export default {
                     name: "分组",
                     type: "VSelect",
                     model: "group",
-                    src: "",
+                    src:
+                        "/xdatainsight/api/repo/files/tree?filter=*.jpg|*.png|*.gif|*.bmp",
                     value: ""
                 },
                 {
