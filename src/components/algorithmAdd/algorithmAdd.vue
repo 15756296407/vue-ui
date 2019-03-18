@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="alginfo">
     <div>算法基础信息</div>
     <!--     <div v-for="component in algorithmCfg" class="components">
       <component :is="component.type" :data="component" :ok="handle"></component>
@@ -42,7 +42,7 @@
             <component
               :is="components.middle.type"
               :data="components.middle"
-              :ok="handle"
+              :ok="(value)=>handle(components.type,0,components.middle.model,value)"
               style="margin-bottom:15px;"
             ></component>
           </div>
@@ -53,11 +53,15 @@
         </div>
       </el-collapse-item>
     </el-collapse>
+    <button @click="save">保存</button>
   </div>
 </template>
 <script>
+
 import Widgets from '@/widgets/index.js';
 import { mapState } from 'vuex';
+import axios from 'axios';
+import $ from 'jquery'
 export default {
   data () {
     return {
@@ -82,6 +86,31 @@ export default {
     remove (e, type, ind) {
       e.stopPropagation();
       this.$store.commit('algorithmCfg/removeCfg', { type, ind });
+    },
+    save () {
+
+      let { defaultCfg } = this.$store.state.algorithmCfg;
+      let _defaultCfg = $.extend(true, {}, defaultCfg);
+      if (!_defaultCfg.base[0].jarpath) {
+        return false;
+      }
+      let data = new FormData();
+      data.append("jarpath", _defaultCfg.base[0].jarpath);
+      delete _defaultCfg.base[0].jarpath;
+      data.append('algorithmBean', JSON.stringify(_defaultCfg.base[0]));
+      data.append('inputPorts', JSON.stringify(_defaultCfg.input));
+      data.append('outputPorts', JSON.stringify(_defaultCfg.output));
+      data.append('parameters', JSON.stringify(_defaultCfg.parmas));
+      data.append('actions', JSON.stringify({}));
+      data.append('dependenceJars', _defaultCfg.algJarPath);
+
+
+      axios({
+        url: '/myworknote/alg/addAlgorithm',
+        method: 'post',
+        data
+      });
+
     }
   },
   computed: {

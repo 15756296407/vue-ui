@@ -45,6 +45,7 @@ export default {
       if (!fileList.length || (fileList.length && !fileList[0].type)) {
         return false;
       }
+        this.ok(fileList[0])
     },
     removeDrop () {
 

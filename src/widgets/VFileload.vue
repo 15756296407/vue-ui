@@ -5,6 +5,7 @@
     </el-col>
     <el-col :span="18">
       <el-input
+              ref="input"
         type="file"
         v-model="data.value"
         :value="data.value"
@@ -15,6 +16,7 @@
   </el-row>
 </template>
 <script>
+    import $ from 'jquery';
 export default {
   props: {
     data: {
@@ -26,7 +28,8 @@ export default {
   },
   methods: {
     onChange (value) {
-      this.ok(value)
+        let input = $(this.$refs.input.$el).find('input')[0];
+      this.ok(input.files[0])
     }
   }
 }

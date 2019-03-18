@@ -19,7 +19,7 @@ let cfg = {
     output: { ...defCfg.output[0] },
     parmas: { ...defCfg.parmas[0] }
 };
-
+defCfg.algJarPath = [];
 export default {
     namespaced: true,
     state: {
@@ -52,7 +52,8 @@ export default {
         updateCfg(state, action) {
             let { type, ind, model, value } = action;
             let _cfg = state.defaultCfg[type][ind];
-            if (model === "") {
+            if (model === "algJarPath") {
+                state.defaultCfg['algJarPath'].push(value);
             } else {
                 _cfg[model] = value;
             }

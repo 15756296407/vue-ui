@@ -11,43 +11,49 @@ export default {
                 {
                     name: "算法名",
                     type: "VInput",
-                    model: "numName",
+                    model: "algname",
+                    towards:'row',
                     src: "",
                     value: ""
                 },
                 {
                     name: "类名",
                     type: "VInput",
-                    model: "className",
+                    model: "classname",
+                    towards:'row',
                     src: "",
                     value: ""
                 },
-                {
-                    name: "包名",
-                    type: "VInput",
-                    model: "jarName",
-                    src: "",
-                    value: ""
-                },
+                // {
+                //     name: "包名",
+                //     type: "VInput",
+                //     model: "jarpath",
+                //     towards:'row',
+                //     src: "",
+                //     value: ""
+                // },
                 {
                     name: "分组",
                     type: "VSelect",
-                    model: "group",
+                    model: "groupid",
+                    towards:'row',
                     src:
-                        "/xdatainsight/api/repo/files/tree?filter=*.jpg|*.png|*.gif|*.bmp",
+                        "/myworknote/alg/queryAlgGroup?age=1",
                     value: ""
                 },
                 {
                     name: "描述信息",
                     type: "VTextarea",
-                    model: "info",
+                    model: "description",
+                    towards:'row',
                     src: "",
                     value: ""
                 },
                 {
                     name: "算法包",
                     type: "VFileload",
-                    model: "jarSrc",
+                    model: "jarpath",
+                    towards:'row',
                     src: "",
                     value: ""
                 }
@@ -55,7 +61,8 @@ export default {
             middle: {
                 name: "",
                 type: "VDropFileupload",
-                model: "jarload",
+                model: "algJarPath",
+                towards:'row',
                 src: "",
                 value: ""
             },
@@ -73,28 +80,32 @@ export default {
                 {
                     name: "端口名",
                     type: "VInput",
-                    model: "portName",
+                    model: "partname",
+                    towards:'col',
                     src: "",
                     value: ""
                 },
                 {
                     name: "数据类型",
                     type: "VSelect",
-                    model: "numType",
+                    model: "datatype",
+                    towards:'col',
                     src: "",
                     value: ""
                 },
                 {
                     name: "方法名",
                     type: "VInput",
-                    model: "funName",
+                    model: "method",
+                    towards:'col',
                     src: "",
                     value: ""
                 },
                 {
                     name: "列选择方法名",
                     type: "VInput",
-                    model: "colName",
+                    model: "columnmethod",
+                    towards:'col',
                     src: "",
                     value: ""
                 }
@@ -108,28 +119,32 @@ export default {
                 {
                     name: "端口名",
                     type: "VInput",
-                    model: "portName",
+                    model: "portname",
+                    towards:'col',
                     src: "",
                     value: ""
                 },
                 {
                     name: "数据类型",
                     type: "VSelect",
-                    model: "numType",
+                    model: "datatype",
+                    towards:'col',
                     src: "",
                     value: ""
                 },
                 {
                     name: "方法名",
                     type: "VInput",
-                    model: "funName",
+                    model: "method",
+                    towards:'col',
                     src: "",
                     value: ""
                 },
                 {
                     name: "列选择方法名",
                     type: "VInput",
-                    model: "colName",
+                    model: "columnmethod",
+                    towards:'col',
                     src: "",
                     value: ""
                 }
@@ -143,35 +158,40 @@ export default {
                 {
                     name: "参数名",
                     type: "VInput",
-                    model: "paramName",
+                    model: "name",
+                    towards:'col',
                     src: "",
                     value: ""
                 },
                 {
                     name: "展示名",
                     type: "VInput",
-                    model: "showName",
+                    model: "label",
+                    towards:'col',
                     src: "",
                     value: ""
                 },
                 {
                     name: "默认值",
                     type: "VInput",
-                    model: "defaultName",
+                    model: "defaultvalue",
+                    towards:'col',
                     src: "",
                     value: ""
                 },
                 {
                     name: "描述",
                     type: "VTextarea",
-                    model: "decoration",
+                    model: "description",
+                    towards:'col',
                     src: "",
                     value: ""
                 },
                 {
                     name: "展示类型",
                     type: "VSelect",
-                    model: "showType",
+                    model: "uitype",
+                    towards:'col',
                     src: "",
                     value: ""
                 },
@@ -179,6 +199,7 @@ export default {
                     name: "高级配置",
                     type: "VTextarea",
                     model: "highCfg",
+                    towards:'col',
                     src: "",
                     value: ""
                 }

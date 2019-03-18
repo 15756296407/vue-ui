@@ -15,6 +15,7 @@
 <script>
 import $ from 'jquery';
 import { mapState } from 'vuex';
+import axios from 'axios';
 export default {
   data () {
     return {
@@ -30,6 +31,15 @@ export default {
           x = boundry.x - $('#menus').width(),
           y = boundry.y;
         let _time = +new Date();
+        axios({
+          url: '/myworknote/alg/queryAlgorithmById',
+          method: 'post',
+          params: {
+            algId: dataId
+          }
+        }).then(e => {
+          e.data;
+        })
         _this.isAdd = true;//是否是添加组件的标记
         _this.$store.commit('handleModels/addNodes', {
           name: dataId,
@@ -123,6 +133,7 @@ export default {
             anchor: "Top",
             isTarget: true,
             maxConnections: 10,
+            overlays: [["Label", { label: '46545614651561561', labelStyle: { font: 20, color: '#fff' } }]],
             beforeDetach: function (conn) {   //绑定一个函数，在连线前弹出确认框  
               //   console.log('conn', conn);
               let { sourceId, targetId } = conn;
@@ -140,7 +151,8 @@ export default {
             uuid: _id + "-bottom",
             anchor: "Bottom",
             isSource: true,
-            maxConnections: 10
+            maxConnections: 10,
+            overlays: [["Label", { label: '46545614651561561', labelStyle: { font: 20, color: '#fff' } }]]
           });
           instance.draggable(item, {
             containment: '.drag-container',
@@ -183,7 +195,7 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 #canvas {
   flex: 1;
   position: relative;
@@ -196,6 +208,17 @@ export default {
     width: 100%;
     height: 100%;
     position: absolute;
+  }
+  .jtk-overlay {
+    display: none;
+    transform: translate(-50%, -100% - 5px) !important;
+    border: 1px solid gray;
+    user-select: none;
+    pointer-events: none;
+    background: gray;
+  }
+  .jtk-hover {
+    display: block;
   }
 }
 </style>

@@ -15,6 +15,7 @@ import "@/assets/libs/jquery-ui/jquery-ui.min";
 import "@/assets/libs/jquery-ui/jquery-ui.structure.min.css";
 import "@/assets/libs/jquery-ui/jquery-ui.theme.min.css";
 import { setTimeout } from 'timers';
+import axios from 'axios';
 let data = [{
   id: 1,
   label: '一级 1',
@@ -80,7 +81,7 @@ export default {
       let className = 'menu-label';
       data.children && (className += '-parent');
       return (
-        <div class={className} dataId={data.label}>{data.label}</div>
+        <div class={className} dataId={data.id} >{data.label}</div>
       )
     },
     syncBindDrag () {
@@ -120,7 +121,16 @@ export default {
   },
   mounted () {
     this.bindDrag();
-
+    /* axios({
+      url: '/myworknote/alg/listAlgorithms'
+    }).then(e => {
+      this.data6.splice(0, this.data6.length);
+      let data = e.data;
+      data = (data && data.data) ? data.data : [];
+      data.forEach(item => {
+        this.data6.push(item);
+      });
+    }); */
   }
 }
 </script>
