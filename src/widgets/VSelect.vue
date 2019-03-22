@@ -1,30 +1,41 @@
 <template>
-  <el-row type="flex" align="middle">
-    <el-col :span="6">
-      <div class="grid-name">{{data.name}}</div>
-    </el-col>
-    <el-col :span="18">
-      <el-select v-model="value" placeholder="请选择" @change="onChange">
-        <el-option
-          v-for="item in options"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        ></el-option>
-      </el-select>
-      <div v-for="model in ooptions">
-        <div>
-          <i v-if="isFolder" class="fa"></i>
-          <!--isFolder判断是否存在子级改变图标-->
-          <i v-if="!isFolder" class="fa fa-file-text"></i>
-          {{model.label}}
-        </div>
-        <ul v-if="isFolder">
-          <items v-for="cel in model.children" :model="cel"></items>
-        </ul>
-      </div>
-    </el-col>
-  </el-row>
+  <div>
+    <el-row type="flex" align="middle" v-if="data.towards === 'row'">
+      <el-col :span="6">
+        <div class="grid-name">{{data.name}}</div>
+      </el-col>
+      <el-col :span="18">
+        <el-select v-model="value" placeholder="请选择" @change="onChange">
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          ></el-option>
+        </el-select>
+      </el-col>
+    </el-row>
+    <el-row
+      type="flex"
+      style="flex-direction:column"
+      align="middle"
+      v-else-if="data.towards === 'col'"
+    >
+      <el-col :span="16" v-if="!ind">
+        <div class="grid-name">{{data.name}}</div>
+      </el-col>
+      <el-col :span="16">
+        <el-select v-model="value" placeholder="请选择" @change="onChange">
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          ></el-option>
+        </el-select>
+      </el-col>
+    </el-row>
+  </div>
 </template>
 <script>
 import axios from 'axios';
@@ -43,6 +54,9 @@ export default {
     },
     model: {
       type: Object
+    },
+    ind: {
+      type: Number
     }
   },
   data () {

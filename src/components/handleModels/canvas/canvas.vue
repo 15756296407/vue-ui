@@ -28,7 +28,7 @@ export default {
       drop: function (event, ui) {
         let dataId = ui.helper[0].getAttribute("dataId");
         let boundry = ui.helper[0].getBoundingClientRect(),
-          x = boundry.x - $('#menus').width(),
+          x = boundry.x - $('#menus').width() - 100,
           y = boundry.y;
         let _time = +new Date();
         axios({

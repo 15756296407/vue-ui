@@ -16,16 +16,21 @@
           <el-button type="primary" icon="el-icon-plus" circle @click="add($event,components.type)"></el-button>
         </template>
         <div class="components-container">
-          <div style="width:300px;" v-for="(item,ind) in defaultCfg[components.type]">
+          <div
+            v-for="(item,ind) in defaultCfg[components.type]"
+            :style="{width:(components.add ? '100%': '300px'),display:(components.add && 'flex'),alignItems:'center'}"
+          >
             <div
               v-for="component in components.components"
               :name="component.name"
               :key="component.name"
+              :style="{width:'200px'}"
             >
               <component
                 :is="component.type"
                 :data="component"
                 :value="item[component.model]"
+                :ind="ind"
                 :ok="(value)=>handle(components.type,ind,component.model,value)"
                 style="margin-bottom:15px;"
               ></component>
@@ -34,6 +39,7 @@
               v-if="components.add"
               type="primary"
               icon="el-icon-minus"
+              size="mini"
               circle
               @click="remove($event,components.type,ind)"
             ></el-button>
@@ -128,5 +134,6 @@ export default {
 .components-container {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
 }
 </style>
