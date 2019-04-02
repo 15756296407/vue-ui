@@ -121,7 +121,7 @@ export default {
   },
   mounted () {
     this.bindDrag();
-    /* axios({
+     axios({
       url: '/myworknote/alg/listAlgorithms'
     }).then(e => {
       this.data6.splice(0, this.data6.length);
@@ -130,7 +130,7 @@ export default {
       data.forEach(item => {
         this.data6.push(item);
       });
-    }); */
+    }); 
   }
 }
 </script>

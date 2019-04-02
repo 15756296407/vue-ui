@@ -14,12 +14,37 @@ export default {
     namespaced: true,
     state: {
         nodes: [], //存储canvas画布区域的连线状态
-        menus: [] //储存菜单栏数据
+        menus: [], //储存菜单栏数据
+        showParamters:'' //激活组件id
     },
     mutations: {
         addNodes(state, node) {
             let selfnode = $.extend(true, {}, defaultNode, node);
+            var parameters,params=[];
+            //添加参数
+            if(selfnode.parameters){
+                parameters = selfnode.parameters
+                parameters.forEach(p=>{
+                    var type = p.uitype;
+                    var v = p.value
+                    if(!v){
+                        v = p.defaultvalue
+                    }
+                    if(!type)
+                        type = "VInput"
+                    params.push({
+                        name: p.label,
+                        type: type,
+                        model: p.name,
+                        towards:'col',
+                        src: "",
+                        value: v
+                    });
+                });
+            }
+            selfnode.params = params;
             state.nodes.push(selfnode);
+            state.showParamters = selfnode.timer;
             state.nodes = [...state.nodes];
         },
         updateNode(state, action) {
@@ -62,11 +87,29 @@ export default {
                         Object.assign(_node.info, action.value);
                         break;
                     }
+                    case "info": {
+                        Object.assign(_node.info, action.value);
+                        break;
+                    }
                     default:
                         break;
                 }
             }
+            switch (type) {
+                case 'showParamters':{
+                    state.showParamters = action.id;
+                    break;
+                }
+                case "updateParamters":{
+                    _node = state.nodes.find(e => e.timer === state.showParamters);
+                    _node.params[action.ind].value = action.value;
+                    _node.params = [..._node.params];
+                    break;
+                }
+                default:break;
+            }
             state.nodes = [...state.nodes];
+            state = {...state};
         }
     },
     getters: {},
